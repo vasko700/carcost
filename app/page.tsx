@@ -2,6 +2,19 @@
 
 import { useState } from "react";
 import { track } from "@vercel/analytics";
+import { motion } from "framer-motion";
+import {
+  ArrowLeftRight,
+  BadgeDollarSign,
+  CarFront,
+  CircleDollarSign,
+  Fuel,
+  Gauge,
+  Route,
+  Shield,
+  Wallet,
+  Wrench,
+} from "lucide-react";
 import LeadForm from "./components/LeadForm";
 
 type Language = "en" | "ru";
@@ -54,22 +67,21 @@ export default function Home() {
   const t = {
     en: {
       brand: "CarCost",
-      badge: "Car ownership cost calculator",
-      title: "See what your car really costs every month",
+      badge: "Car ownership calculator",
+      title: "Calculate the real cost of owning your car",
       description:
-        "Estimate fuel, insurance, maintenance, and financing in seconds.",
+        "Estimate fuel, insurance, maintenance, and financing in seconds. Compare two scenarios and spot where you're overspending.",
       primary: "Open calculator",
-      secondary: "See how it works",
+      secondary: "How it works",
       stat1: "Fast input",
-      stat1Value: "Built for 30 sec checks",
+      stat1Value: "Built for 30-second checks",
       stat2: "Real numbers",
       stat2Value: "Monthly and yearly cost",
       stat3: "No signup",
       stat3Value: "Use it instantly",
-      lang: "Language",
       calculatorTitle: "Estimate your monthly ownership cost",
       calculatorText:
-        "Start with Scenario A. Add Scenario B only when you want a comparison.",
+        "Start with Scenario A. Add Scenario B only when you want to compare another car, trim, or financing setup.",
       unitsTitle: "Units",
       distanceUnit: "Distance",
       currencyUnit: "Currency",
@@ -93,7 +105,7 @@ export default function Home() {
       costPerDistance: "Cost per distance",
       fuelCost: "Fuel / month",
       noResultText:
-        "Enter a few values above to see your estimated monthly ownership cost.",
+        "Enter a few values to see your estimated monthly ownership cost.",
       scenarioA: "Scenario A",
       scenarioB: "Scenario B",
       comparisonTitle: "Comparison",
@@ -111,24 +123,28 @@ export default function Home() {
       costGroup: "Monthly costs",
       emailTitle: "Save your result + get smarter car cost tips",
       emailText:
-        "Leave your email and we’ll keep your result path for future updates.",
+        "Leave your email and we’ll save your result path for future tools and savings ideas.",
       emailPlaceholder: "Enter your email",
       emailButton: "Save",
       emailSaved: "Saved. You’re on the list.",
       emailError: "Something went wrong. Please try again.",
       nudge:
-        "You could save money by optimizing insurance, financing, or fuel efficiency.",
+        "You could lower your ownership cost by improving insurance, financing, or fuel efficiency.",
       dealsTitle: "You may be overpaying for insurance or financing",
       dealsText:
-        "Compare real offers and see if you can lower your monthly cost.",
+        "Compare offers and see if you can lower your monthly cost.",
       dealsButton: "Compare options →",
+      howTitle: "How it works",
+      how1: "Enter your real monthly driving and cost data",
+      how2: "Calculate one car or compare two ownership scenarios",
+      how3: "Spot the cheapest option and where the money goes",
     },
     ru: {
       brand: "CarCost",
       badge: "Калькулятор стоимости владения авто",
-      title: "Посмотри, сколько на самом деле стоит твоя машина в месяц",
+      title: "Посчитай реальную стоимость владения автомобилем",
       description:
-        "Быстро оцени топливо, страховку, обслуживание и платежи.",
+        "Быстро оцени топливо, страховку, обслуживание и платежи. Сравни два сценария и найди, где ты переплачиваешь.",
       primary: "Открыть калькулятор",
       secondary: "Как это работает",
       stat1: "Быстрый ввод",
@@ -137,10 +153,9 @@ export default function Home() {
       stat2Value: "Стоимость в месяц и в год",
       stat3: "Без регистрации",
       stat3Value: "Можно пользоваться сразу",
-      lang: "Язык",
       calculatorTitle: "Оцени свою стоимость владения в месяц",
       calculatorText:
-        "Начни со Сценария A. Сценарий B добавляй только для сравнения.",
+        "Начни со Сценария A. Сценарий B добавляй, когда хочешь сравнить другой автомобиль, комплектацию или условия финансирования.",
       unitsTitle: "Единицы измерения",
       distanceUnit: "Расстояние",
       currencyUnit: "Валюта",
@@ -164,11 +179,11 @@ export default function Home() {
       costPerDistance: "Стоимость за единицу расстояния",
       fuelCost: "Топливо / мес",
       noResultText:
-        "Введи несколько значений выше, чтобы увидеть примерную стоимость владения в месяц.",
+        "Введи несколько значений, чтобы увидеть примерную стоимость владения в месяц.",
       scenarioA: "Сценарий A",
       scenarioB: "Сценарий B",
       comparisonTitle: "Сравнение",
-      cheaperLabel: "Более дешевый вариант",
+      cheaperLabel: "Более дешёвый вариант",
       savingsMonth: "Экономия / мес",
       savingsYear: "Экономия / год",
       sameCost: "Оба сценария стоят одинаково.",
@@ -178,21 +193,25 @@ export default function Home() {
       l100Label: "л/100 км",
       gallonShort: "/ галлон",
       literShort: "/ литр",
-      drivingGroup: "Движение",
+      drivingGroup: "Эксплуатация",
       costGroup: "Ежемесячные расходы",
       emailTitle: "Сохрани расчёт + получай полезные советы",
       emailText:
-        "Оставь email, и мы сохраним твой результат для будущих обновлений.",
+        "Оставь email, и мы сохраним твой результат для будущих инструментов и идей по экономии.",
       emailPlaceholder: "Введите email",
       emailButton: "Сохранить",
       emailSaved: "Сохранено. Ты в списке.",
       emailError: "Что-то пошло не так. Попробуй ещё раз.",
       nudge:
-        "Ты можешь снизить расходы за счёт страховки, финансирования или расхода топлива.",
+        "Ты можешь снизить стоимость владения за счёт страховки, финансирования или расхода топлива.",
       dealsTitle: "Возможно, ты переплачиваешь за страховку или финансирование",
       dealsText:
         "Сравни предложения и проверь, можно ли снизить ежемесячные расходы.",
       dealsButton: "Сравнить предложения →",
+      howTitle: "Как это работает",
+      how1: "Вводишь реальные данные по пробегу и расходам",
+      how2: "Считаешь одну машину или сравниваешь два сценария",
+      how3: "Видишь самый выгодный вариант и структуру расходов",
     },
   }[language];
 
@@ -396,14 +415,15 @@ export default function Home() {
   ) {
     return (
       <div>
-        <label className="mb-2 block text-sm font-medium text-neutral-300">
+        <label className="mb-2 flex items-center gap-2 text-sm font-medium text-zinc-300">
+          <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
           {label}
         </label>
         <input
           type="number"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-2xl border border-white/10 bg-neutral-900/80 px-4 py-3 text-white outline-none transition focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20"
+          className="w-full rounded-2xl border border-white/10 bg-zinc-900/90 px-4 py-3 text-white outline-none transition duration-200 focus:border-red-400/60 focus:ring-2 focus:ring-red-400/20"
         />
       </div>
     );
@@ -415,16 +435,28 @@ export default function Home() {
     data: ScenarioInput
   ) {
     return (
-      <div className="rounded-[26px] border border-white/10 bg-neutral-900/70 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.25)]">
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="rounded-[26px] border border-white/10 bg-zinc-900/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-0.5 hover:border-red-400/20"
+      >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-medium text-amber-300">
+          <div className="flex items-center gap-3">
+            <div className="rounded-2xl border border-red-400/20 bg-red-400/10 p-2 text-red-300">
+              <CarFront className="h-5 w-5" />
+            </div>
+            <h3 className="text-lg font-semibold">{title}</h3>
+          </div>
+
+          <span className="rounded-full border border-red-400/20 bg-red-400/10 px-3 py-1 text-xs font-medium text-red-300">
             {which}
           </span>
         </div>
 
         <div className="mt-5">
-          <p className="mb-4 text-xs uppercase tracking-[0.18em] text-neutral-500">
+          <p className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
+            <Route className="h-4 w-4" />
             {t.drivingGroup}
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -441,7 +473,8 @@ export default function Home() {
         </div>
 
         <div className="mt-6">
-          <p className="mb-4 text-xs uppercase tracking-[0.18em] text-neutral-500">
+          <p className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
+            <Wallet className="h-4 w-4" />
             {t.costGroup}
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -462,28 +495,38 @@ export default function Home() {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
-  function renderMetricCard(label: string, value: string, accent = false) {
+  function renderMetricCard(
+    label: string,
+    value: string,
+    icon?: React.ReactNode,
+    accent = false
+  ) {
     return (
-      <div
+      <motion.div
+        whileHover={{ y: -2 }}
+        transition={{ duration: 0.18 }}
         className={`rounded-2xl border p-4 ${
           accent
-            ? "border-amber-400/25 bg-amber-400/10"
-            : "border-white/10 bg-neutral-900/70"
+            ? "border-red-400/25 bg-red-400/10"
+            : "border-white/10 bg-zinc-900/80"
         }`}
       >
-        <p className="text-sm text-neutral-400">{label}</p>
+        <div className="flex items-center gap-2 text-zinc-400">
+          {icon}
+          <p className="text-sm">{label}</p>
+        </div>
         <p
           className={`mt-2 text-xl font-semibold ${
-            accent ? "text-amber-300" : ""
+            accent ? "text-red-300" : "text-white"
           }`}
         >
           {value}
         </p>
-      </div>
+      </motion.div>
     );
   }
 
@@ -495,42 +538,54 @@ export default function Home() {
     if (!result) return null;
 
     return (
-      <div className="rounded-[30px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="rounded-[30px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
+      >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
               {t.resultTitle} — {title}
             </p>
-            <p className="mt-3 text-sm text-neutral-400">{t.resultSubtitle}</p>
+            <p className="mt-3 text-sm text-zinc-400">{t.resultSubtitle}</p>
             <h3 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
               {formatCurrency(result.totalMonthlyCost)}
             </h3>
-            <p className="mt-2 text-sm text-neutral-500">{t.perMonthSuffix}</p>
+            <p className="mt-2 text-sm text-zinc-500">{t.perMonthSuffix}</p>
           </div>
 
-          <div className="rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-3">
-            <p className="text-xs uppercase tracking-[0.18em] text-amber-300/80">
+          <div className="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.18em] text-red-300/80">
               {t.yearlyCost}
             </p>
-            <p className="mt-2 text-2xl font-semibold text-amber-300">
+            <p className="mt-2 text-2xl font-semibold text-red-300">
               {formatCurrency(result.totalYearlyCost)}
             </p>
           </div>
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {renderMetricCard(t.fuelCost, formatCurrency(result.fuelCostPerMonth))}
+          {renderMetricCard(
+            t.fuelCost,
+            formatCurrency(result.fuelCostPerMonth),
+            <Fuel className="h-4 w-4" />
+          )}
           {renderMetricCard(
             t.insurancePerMonth,
-            formatCurrency(toSafeNumber(data.insurancePerMonth))
+            formatCurrency(toSafeNumber(data.insurancePerMonth)),
+            <Shield className="h-4 w-4" />
           )}
           {renderMetricCard(
             t.maintenancePerMonth,
-            formatCurrency(toSafeNumber(data.maintenancePerMonth))
+            formatCurrency(toSafeNumber(data.maintenancePerMonth)),
+            <Wrench className="h-4 w-4" />
           )}
           {renderMetricCard(
             t.paymentPerMonth,
-            formatCurrency(toSafeNumber(data.paymentPerMonth))
+            formatCurrency(toSafeNumber(data.paymentPerMonth)),
+            <CircleDollarSign className="h-4 w-4" />
           )}
         </div>
 
@@ -540,31 +595,37 @@ export default function Home() {
               ? `${t.costPerDistance} (${t.milesShort})`
               : `${t.costPerDistance} (${t.kmShort})`,
             formatCurrency(result.costPerDistanceUnit),
+            <Gauge className="h-4 w-4" />,
             true
           )}
         </div>
 
-        <div className="mt-4 rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-sm font-medium text-amber-300">
+        <div className="mt-4 rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm font-medium text-red-300">
           {t.nudge}
         </div>
 
-        <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-          <p className="text-sm font-medium text-neutral-200">
-            💡 {t.dealsTitle}
+        <motion.div
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="mt-4 rounded-2xl border border-white/10 bg-zinc-900/70 p-4"
+        >
+          <p className="flex items-center gap-2 text-sm font-medium text-zinc-200">
+            <BadgeDollarSign className="h-4 w-4 text-red-300" />
+            {t.dealsTitle}
           </p>
 
-          <p className="mt-2 text-sm text-neutral-400">{t.dealsText}</p>
+          <p className="mt-2 text-sm text-zinc-400">{t.dealsText}</p>
 
           <a
             href="https://www.google.com/search?q=car+insurance+comparison"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
+            className="mt-3 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90"
           >
             {t.dealsButton}
           </a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     );
   }
 
@@ -587,19 +648,30 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-white">
+    <main className="min-h-screen bg-zinc-950 text-white">
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.10),transparent_30%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(255,255,255,0.05),transparent_25%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.12),transparent_30%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(255,255,255,0.04),transparent_25%)]" />
+        <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] [background-size:48px_48px]" />
 
         <div className="relative mx-auto max-w-6xl px-6 py-8">
-          <div className="flex items-center justify-between gap-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-neutral-400">
-              {t.brand}
-            </p>
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className="flex items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="rounded-2xl border border-red-400/20 bg-red-400/10 p-2 text-red-300">
+                <CarFront className="h-5 w-5" />
+              </div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-zinc-300">
+                {t.brand}
+              </p>
+            </div>
 
             <div className="flex items-center gap-3">
-              <span className="hidden text-sm text-neutral-400 sm:block">
+              <span className="hidden text-sm text-zinc-400 sm:block">
                 {language === "en" ? "Language" : "Язык"}
               </span>
 
@@ -629,11 +701,17 @@ export default function Home() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
-            <div className="max-w-3xl">
-              <div className="inline-flex rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-2 text-sm text-amber-300">
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="max-w-3xl"
+            >
+              <div className="inline-flex items-center gap-2 rounded-full border border-red-400/20 bg-red-400/10 px-4 py-2 text-sm text-red-300">
+                <Gauge className="h-4 w-4" />
                 {t.badge}
               </div>
 
@@ -641,7 +719,7 @@ export default function Home() {
                 {t.title}
               </h1>
 
-              <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-300 sm:text-lg">
+              <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg">
                 {t.description}
               </p>
 
@@ -660,12 +738,43 @@ export default function Home() {
                   {t.secondary}
                 </a>
               </div>
-            </div>
+            </motion.div>
 
             <div className="grid gap-4 self-end">
-              {renderMetricCard(t.stat1, t.stat1Value)}
-              {renderMetricCard(t.stat2, t.stat2Value, true)}
-              {renderMetricCard(t.stat3, t.stat3Value)}
+              <motion.div
+                initial={{ opacity: 0, x: 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: 0.05 }}
+              >
+                {renderMetricCard(
+                  t.stat1,
+                  t.stat1Value,
+                  <Gauge className="h-4 w-4" />
+                )}
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: 0.12 }}
+              >
+                {renderMetricCard(
+                  t.stat2,
+                  t.stat2Value,
+                  <BadgeDollarSign className="h-4 w-4" />,
+                  true
+                )}
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: 0.19 }}
+              >
+                {renderMetricCard(
+                  t.stat3,
+                  t.stat3Value,
+                  <Shield className="h-4 w-4" />
+                )}
+              </motion.div>
             </div>
           </div>
         </div>
@@ -673,9 +782,44 @@ export default function Home() {
 
       <section
         id="how-it-works"
-        className="mx-auto max-w-6xl px-6 py-16 text-neutral-400"
+        className="mx-auto max-w-6xl px-6 py-16"
       >
-        Step 2: comparison
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.35 }}
+        >
+          <h2 className="text-2xl font-semibold text-white">{t.howTitle}</h2>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {[
+              {
+                icon: <Route className="h-5 w-5" />,
+                text: t.how1,
+              },
+              {
+                icon: <ArrowLeftRight className="h-5 w-5" />,
+                text: t.how2,
+              },
+              {
+                icon: <BadgeDollarSign className="h-5 w-5" />,
+                text: t.how3,
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -2 }}
+                className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 text-zinc-300"
+              >
+                <div className="mb-3 inline-flex rounded-2xl border border-red-400/20 bg-red-400/10 p-2 text-red-300">
+                  {item.icon}
+                </div>
+                <p className="text-sm leading-6">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       <section
@@ -684,19 +828,24 @@ export default function Home() {
       >
         <div className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="rounded-[34px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="rounded-[34px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
+            >
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="text-3xl font-semibold tracking-tight">
                     {t.calculatorTitle}
                   </h2>
-                  <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-300 sm:text-base">
+                  <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-300 sm:text-base">
                     {t.calculatorText}
                   </p>
                 </div>
 
-                <div className="hidden rounded-2xl border border-amber-400/20 bg-amber-400/10 px-3 py-2 text-xs font-medium text-amber-300 sm:block">
-                  beta
+                <div className="hidden rounded-2xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs font-medium text-red-300 sm:block">
+                  live
                 </div>
               </div>
 
@@ -710,20 +859,20 @@ export default function Home() {
 
                 <button
                   onClick={() => setShowCompare((prev) => !prev)}
-                  className="inline-flex items-center justify-center rounded-2xl border border-amber-400/20 bg-amber-400/10 px-5 py-3 text-sm font-semibold text-amber-300 transition hover:bg-amber-400/15"
+                  className="inline-flex items-center justify-center rounded-2xl border border-red-400/20 bg-red-400/10 px-5 py-3 text-sm font-semibold text-red-300 transition hover:bg-red-400/15"
                 >
                   {showCompare ? t.compareHide : t.compareShow}
                 </button>
               </div>
 
-              <div className="mt-8 rounded-[24px] border border-white/10 bg-neutral-900/60 p-5">
-                <p className="mb-4 text-sm font-medium text-neutral-300">
+              <div className="mt-8 rounded-[24px] border border-white/10 bg-zinc-900/70 p-5">
+                <p className="mb-4 text-sm font-medium text-zinc-300">
                   {t.unitsTitle}
                 </p>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-neutral-300">
+                    <label className="mb-2 block text-sm font-medium text-zinc-300">
                       {t.distanceUnit}
                     </label>
                     <select
@@ -731,7 +880,7 @@ export default function Home() {
                       onChange={(e) =>
                         setDistanceUnit(e.target.value as DistanceUnit)
                       }
-                      className="w-full rounded-2xl border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none"
+                      className="w-full rounded-2xl border border-white/10 bg-zinc-900 px-4 py-3 text-white outline-none"
                     >
                       <option value="mi">Miles / MPG</option>
                       <option value="km">Kilometers / L/100 km</option>
@@ -739,7 +888,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-neutral-300">
+                    <label className="mb-2 block text-sm font-medium text-zinc-300">
                       {t.currencyUnit}
                     </label>
                     <select
@@ -747,7 +896,7 @@ export default function Home() {
                       onChange={(e) =>
                         setCurrency(e.target.value as CurrencyCode)
                       }
-                      className="w-full rounded-2xl border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none"
+                      className="w-full rounded-2xl border border-white/10 bg-zinc-900 px-4 py-3 text-white outline-none"
                     >
                       <option value="USD">USD</option>
                       <option value="EUR">EUR</option>
@@ -786,7 +935,7 @@ export default function Home() {
 
                     <button
                       onClick={handleCompare}
-                      className="inline-flex items-center justify-center rounded-2xl border border-amber-400/20 bg-amber-400/10 px-6 py-3 text-sm font-semibold text-amber-300 transition hover:bg-amber-400/15"
+                      className="inline-flex items-center justify-center rounded-2xl border border-red-400/20 bg-red-400/10 px-6 py-3 text-sm font-semibold text-red-300 transition hover:bg-red-400/15"
                     >
                       {t.compareButton}
                     </button>
@@ -800,42 +949,62 @@ export default function Home() {
                   {t.clearButton}
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             <div className="space-y-6">
               {!resultA && !resultB && (
-                <div className="rounded-[34px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8">
-                  <p className="text-sm leading-6 text-neutral-300">
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="rounded-[34px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
+                >
+                  <p className="text-sm leading-6 text-zinc-300">
                     {t.noResultText}
                   </p>
-                </div>
+                </motion.div>
               )}
 
               {renderResultCard(t.scenarioA, resultA, scenarioA)}
               {showCompare && renderResultCard(t.scenarioB, resultB, scenarioB)}
 
               {showCompare && resultA && resultB && (
-                <div className="rounded-[30px] border border-amber-400/20 bg-amber-400/10 p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8">
-                  <h3 className="text-2xl font-semibold">{t.comparisonTitle}</h3>
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="rounded-[30px] border border-red-400/20 bg-red-400/10 p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
+                >
+                  <h3 className="flex items-center gap-2 text-2xl font-semibold">
+                    <ArrowLeftRight className="h-5 w-5" />
+                    {t.comparisonTitle}
+                  </h3>
 
                   {cheaperScenarioLabel ? (
                     <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                      {renderMetricCard(t.cheaperLabel, cheaperScenarioLabel, true)}
+                      {renderMetricCard(
+                        t.cheaperLabel,
+                        cheaperScenarioLabel,
+                        <CarFront className="h-4 w-4" />,
+                        true
+                      )}
                       {renderMetricCard(
                         t.savingsMonth,
                         formatCurrency(monthlySavings),
+                        <Wallet className="h-4 w-4" />,
                         true
                       )}
                       {renderMetricCard(
                         t.savingsYear,
                         formatCurrency(yearlySavings),
+                        <BadgeDollarSign className="h-4 w-4" />,
                         true
                       )}
                     </div>
                   ) : (
-                    <p className="mt-4 text-neutral-200">{t.sameCost}</p>
+                    <p className="mt-4 text-zinc-200">{t.sameCost}</p>
                   )}
-                </div>
+                </motion.div>
               )}
 
               {(resultA || resultB) && (
