@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { track } from "@vercel/analytics";
 import { motion } from "framer-motion";
@@ -68,9 +69,9 @@ export default function Home() {
     en: {
       brand: "CarCost",
       badge: "Car ownership calculator",
-      title: "Calculate the real cost of owning your car",
+      title: "See what your car really costs every month",
       description:
-        "Estimate fuel, insurance, maintenance, and financing in seconds. Compare two scenarios and spot where you're overspending.",
+        "Estimate fuel, insurance, maintenance, and financing in seconds. Compare two scenarios and see where your money actually goes.",
       primary: "Open calculator",
       secondary: "How it works",
       stat1: "Fast input",
@@ -81,7 +82,7 @@ export default function Home() {
       stat3Value: "Use it instantly",
       calculatorTitle: "Estimate your monthly ownership cost",
       calculatorText:
-        "Start with Scenario A. Add Scenario B only when you want to compare another car, trim, or financing setup.",
+        "Start with Scenario A. Add Scenario B when you want to compare another car, trim, fuel economy, or payment setup.",
       unitsTitle: "Units",
       distanceUnit: "Distance",
       currencyUnit: "Currency",
@@ -123,7 +124,7 @@ export default function Home() {
       costGroup: "Monthly costs",
       emailTitle: "Save your result + get smarter car cost tips",
       emailText:
-        "Leave your email and we’ll save your result path for future tools and savings ideas.",
+        "Leave your email and we’ll save your result for future tools and savings ideas.",
       emailPlaceholder: "Enter your email",
       emailButton: "Save",
       emailSaved: "Saved. You’re on the list.",
@@ -132,19 +133,19 @@ export default function Home() {
         "You could lower your ownership cost by improving insurance, financing, or fuel efficiency.",
       dealsTitle: "You may be overpaying for insurance or financing",
       dealsText:
-        "Compare offers and see if you can lower your monthly cost.",
+        "Compare real offers and see if you can lower your monthly cost.",
       dealsButton: "Compare options →",
       howTitle: "How it works",
-      how1: "Enter your real monthly driving and cost data",
+      how1: "Enter your real monthly driving and ownership costs",
       how2: "Calculate one car or compare two ownership scenarios",
-      how3: "Spot the cheapest option and where the money goes",
+      how3: "See the cheaper option and the biggest cost drivers",
     },
     ru: {
       brand: "CarCost",
       badge: "Калькулятор стоимости владения авто",
-      title: "Посчитай реальную стоимость владения автомобилем",
+      title: "Посмотри, сколько на самом деле стоит твоя машина в месяц",
       description:
-        "Быстро оцени топливо, страховку, обслуживание и платежи. Сравни два сценария и найди, где ты переплачиваешь.",
+        "Быстро оцени топливо, страховку, обслуживание и платежи. Сравни два сценария и посмотри, куда реально уходят деньги.",
       primary: "Открыть калькулятор",
       secondary: "Как это работает",
       stat1: "Быстрый ввод",
@@ -155,7 +156,7 @@ export default function Home() {
       stat3Value: "Можно пользоваться сразу",
       calculatorTitle: "Оцени свою стоимость владения в месяц",
       calculatorText:
-        "Начни со Сценария A. Сценарий B добавляй, когда хочешь сравнить другой автомобиль, комплектацию или условия финансирования.",
+        "Начни со Сценария A. Сценарий B добавляй, когда хочешь сравнить другую машину, комплектацию, расход или платёж.",
       unitsTitle: "Единицы измерения",
       distanceUnit: "Расстояние",
       currencyUnit: "Валюта",
@@ -183,7 +184,7 @@ export default function Home() {
       scenarioA: "Сценарий A",
       scenarioB: "Сценарий B",
       comparisonTitle: "Сравнение",
-      cheaperLabel: "Более дешёвый вариант",
+      cheaperLabel: "Более выгодный вариант",
       savingsMonth: "Экономия / мес",
       savingsYear: "Экономия / год",
       sameCost: "Оба сценария стоят одинаково.",
@@ -211,7 +212,7 @@ export default function Home() {
       howTitle: "Как это работает",
       how1: "Вводишь реальные данные по пробегу и расходам",
       how2: "Считаешь одну машину или сравниваешь два сценария",
-      how3: "Видишь самый выгодный вариант и структуру расходов",
+      how3: "Видишь более выгодный вариант и основные статьи затрат",
     },
   }[language];
 
@@ -415,15 +416,15 @@ export default function Home() {
   ) {
     return (
       <div>
-        <label className="mb-2 flex items-center gap-2 text-sm font-medium text-zinc-300">
-          <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
+        <label className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-300">
+          <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
           {label}
         </label>
         <input
           type="number"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-2xl border border-white/10 bg-zinc-900/90 px-4 py-3 text-white outline-none transition duration-200 focus:border-red-400/60 focus:ring-2 focus:ring-red-400/20"
+          className="w-full rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 text-white outline-none transition duration-200 focus:border-sky-400/60 focus:ring-2 focus:ring-sky-400/20"
         />
       </div>
     );
@@ -439,23 +440,23 @@ export default function Home() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="rounded-[26px] border border-white/10 bg-zinc-900/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-0.5 hover:border-red-400/20"
+        className="rounded-[26px] border border-white/10 bg-slate-900/70 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-0.5 hover:border-sky-400/20"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-2xl border border-red-400/20 bg-red-400/10 p-2 text-red-300">
+            <div className="rounded-2xl border border-sky-400/20 bg-sky-400/10 p-2 text-sky-300">
               <CarFront className="h-5 w-5" />
             </div>
             <h3 className="text-lg font-semibold">{title}</h3>
           </div>
 
-          <span className="rounded-full border border-red-400/20 bg-red-400/10 px-3 py-1 text-xs font-medium text-red-300">
+          <span className="rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-xs font-medium text-sky-300">
             {which}
           </span>
         </div>
 
         <div className="mt-5">
-          <p className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
+          <p className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-slate-500">
             <Route className="h-4 w-4" />
             {t.drivingGroup}
           </p>
@@ -473,7 +474,7 @@ export default function Home() {
         </div>
 
         <div className="mt-6">
-          <p className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
+          <p className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-slate-500">
             <Wallet className="h-4 w-4" />
             {t.costGroup}
           </p>
@@ -511,17 +512,17 @@ export default function Home() {
         transition={{ duration: 0.18 }}
         className={`rounded-2xl border p-4 ${
           accent
-            ? "border-red-400/25 bg-red-400/10"
-            : "border-white/10 bg-zinc-900/80"
+            ? "border-sky-400/25 bg-sky-400/10"
+            : "border-white/10 bg-slate-900/75"
         }`}
       >
-        <div className="flex items-center gap-2 text-zinc-400">
+        <div className="flex items-center gap-2 text-slate-400">
           {icon}
           <p className="text-sm">{label}</p>
         </div>
         <p
           className={`mt-2 text-xl font-semibold ${
-            accent ? "text-red-300" : "text-white"
+            accent ? "text-sky-300" : "text-white"
           }`}
         >
           {value}
@@ -546,21 +547,21 @@ export default function Home() {
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
               {t.resultTitle} — {title}
             </p>
-            <p className="mt-3 text-sm text-zinc-400">{t.resultSubtitle}</p>
+            <p className="mt-3 text-sm text-slate-400">{t.resultSubtitle}</p>
             <h3 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
               {formatCurrency(result.totalMonthlyCost)}
             </h3>
-            <p className="mt-2 text-sm text-zinc-500">{t.perMonthSuffix}</p>
+            <p className="mt-2 text-sm text-slate-500">{t.perMonthSuffix}</p>
           </div>
 
-          <div className="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3">
-            <p className="text-xs uppercase tracking-[0.18em] text-red-300/80">
+          <div className="rounded-2xl border border-sky-400/20 bg-sky-400/10 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.18em] text-sky-300/80">
               {t.yearlyCost}
             </p>
-            <p className="mt-2 text-2xl font-semibold text-red-300">
+            <p className="mt-2 text-2xl font-semibold text-sky-300">
               {formatCurrency(result.totalYearlyCost)}
             </p>
           </div>
@@ -600,21 +601,21 @@ export default function Home() {
           )}
         </div>
 
-        <div className="mt-4 rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm font-medium text-red-300">
+        <div className="mt-4 rounded-2xl border border-sky-400/20 bg-sky-400/10 px-4 py-3 text-sm font-medium text-sky-300">
           {t.nudge}
         </div>
 
         <motion.div
           whileHover={{ y: -2 }}
           transition={{ duration: 0.18 }}
-          className="mt-4 rounded-2xl border border-white/10 bg-zinc-900/70 p-4"
+          className="mt-4 rounded-2xl border border-white/10 bg-slate-900/70 p-4"
         >
-          <p className="flex items-center gap-2 text-sm font-medium text-zinc-200">
-            <BadgeDollarSign className="h-4 w-4 text-red-300" />
+          <p className="flex items-center gap-2 text-sm font-medium text-slate-200">
+            <BadgeDollarSign className="h-4 w-4 text-sky-300" />
             {t.dealsTitle}
           </p>
 
-          <p className="mt-2 text-sm text-zinc-400">{t.dealsText}</p>
+          <p className="mt-2 text-sm text-slate-400">{t.dealsText}</p>
 
           <a
             href="https://www.google.com/search?q=car+insurance+comparison"
@@ -648,11 +649,12 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
+    <main className="min-h-screen bg-slate-950 text-white">
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.12),transparent_30%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.12),transparent_30%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(255,255,255,0.04),transparent_25%)]" />
         <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] [background-size:48px_48px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.1),rgba(2,6,23,0.85))]" />
 
         <div className="relative mx-auto max-w-6xl px-6 py-8">
           <motion.div
@@ -662,16 +664,16 @@ export default function Home() {
             className="flex items-center justify-between gap-4"
           >
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl border border-red-400/20 bg-red-400/10 p-2 text-red-300">
+              <div className="rounded-2xl border border-sky-400/20 bg-sky-400/10 p-2 text-sky-300">
                 <CarFront className="h-5 w-5" />
               </div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-zinc-300">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-300">
                 {t.brand}
               </p>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="hidden text-sm text-zinc-400 sm:block">
+              <span className="hidden text-sm text-slate-400 sm:block">
                 {language === "en" ? "Language" : "Язык"}
               </span>
 
@@ -703,14 +705,14 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <div className="grid gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
+          <div className="grid items-center gap-12 py-14 lg:grid-cols-[1fr_1fr] lg:py-20">
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="max-w-3xl"
+              className="relative z-10 max-w-3xl"
             >
-              <div className="inline-flex items-center gap-2 rounded-full border border-red-400/20 bg-red-400/10 px-4 py-2 text-sm text-red-300">
+              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-sm text-sky-300">
                 <Gauge className="h-4 w-4" />
                 {t.badge}
               </div>
@@ -719,7 +721,7 @@ export default function Home() {
                 {t.title}
               </h1>
 
-              <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg">
+              <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
                 {t.description}
               </p>
 
@@ -740,50 +742,73 @@ export default function Home() {
               </div>
             </motion.div>
 
-            <div className="grid gap-4 self-end">
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.55 }}
+              className="relative"
+            >
+              <div className="absolute -inset-8 rounded-full bg-sky-400/10 blur-3xl" />
+
               <motion.div
-                initial={{ opacity: 0, x: 18 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.05 }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative"
               >
-                {renderMetricCard(
-                  t.stat1,
-                  t.stat1Value,
-                  <Gauge className="h-4 w-4" />
-                )}
+                <Image
+                  src="/hero-carv2.png"
+                  alt="CarCost hero car"
+                  width={1200}
+                  height={800}
+                  priority
+                  className="relative z-10 w-full select-none object-contain drop-shadow-[0_30px_60px_rgba(56,189,248,0.15)]"
+                />
               </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 18 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.12 }}
-              >
-                {renderMetricCard(
-                  t.stat2,
-                  t.stat2Value,
-                  <BadgeDollarSign className="h-4 w-4" />,
-                  true
-                )}
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 18 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.19 }}
-              >
-                {renderMetricCard(
-                  t.stat3,
-                  t.stat3Value,
-                  <Shield className="h-4 w-4" />
-                )}
-              </motion.div>
-            </div>
+            </motion.div>
+          </div>
+
+          <div className="grid gap-4 pb-6 md:grid-cols-3">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.08 }}
+            >
+              {renderMetricCard(
+                t.stat1,
+                t.stat1Value,
+                <Gauge className="h-4 w-4" />
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.15 }}
+            >
+              {renderMetricCard(
+                t.stat2,
+                t.stat2Value,
+                <BadgeDollarSign className="h-4 w-4" />,
+                true
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.22 }}
+            >
+              {renderMetricCard(
+                t.stat3,
+                t.stat3Value,
+                <Shield className="h-4 w-4" />
+              )}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      <section
-        id="how-it-works"
-        className="mx-auto max-w-6xl px-6 py-16"
-      >
+      <section id="how-it-works" className="mx-auto max-w-6xl px-6 py-16">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -810,9 +835,9 @@ export default function Home() {
               <motion.div
                 key={index}
                 whileHover={{ y: -2 }}
-                className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 text-zinc-300"
+                className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5 text-slate-300"
               >
-                <div className="mb-3 inline-flex rounded-2xl border border-red-400/20 bg-red-400/10 p-2 text-red-300">
+                <div className="mb-3 inline-flex rounded-2xl border border-sky-400/20 bg-sky-400/10 p-2 text-sky-300">
                   {item.icon}
                 </div>
                 <p className="text-sm leading-6">{item.text}</p>
@@ -839,12 +864,12 @@ export default function Home() {
                   <h2 className="text-3xl font-semibold tracking-tight">
                     {t.calculatorTitle}
                   </h2>
-                  <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-300 sm:text-base">
+                  <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
                     {t.calculatorText}
                   </p>
                 </div>
 
-                <div className="hidden rounded-2xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs font-medium text-red-300 sm:block">
+                <div className="hidden rounded-2xl border border-sky-400/20 bg-sky-400/10 px-3 py-2 text-xs font-medium text-sky-300 sm:block">
                   live
                 </div>
               </div>
@@ -859,20 +884,20 @@ export default function Home() {
 
                 <button
                   onClick={() => setShowCompare((prev) => !prev)}
-                  className="inline-flex items-center justify-center rounded-2xl border border-red-400/20 bg-red-400/10 px-5 py-3 text-sm font-semibold text-red-300 transition hover:bg-red-400/15"
+                  className="inline-flex items-center justify-center rounded-2xl border border-sky-400/20 bg-sky-400/10 px-5 py-3 text-sm font-semibold text-sky-300 transition hover:bg-sky-400/15"
                 >
                   {showCompare ? t.compareHide : t.compareShow}
                 </button>
               </div>
 
-              <div className="mt-8 rounded-[24px] border border-white/10 bg-zinc-900/70 p-5">
-                <p className="mb-4 text-sm font-medium text-zinc-300">
+              <div className="mt-8 rounded-[24px] border border-white/10 bg-slate-900/60 p-5">
+                <p className="mb-4 text-sm font-medium text-slate-300">
                   {t.unitsTitle}
                 </p>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-zinc-300">
+                    <label className="mb-2 block text-sm font-medium text-slate-300">
                       {t.distanceUnit}
                     </label>
                     <select
@@ -880,7 +905,7 @@ export default function Home() {
                       onChange={(e) =>
                         setDistanceUnit(e.target.value as DistanceUnit)
                       }
-                      className="w-full rounded-2xl border border-white/10 bg-zinc-900 px-4 py-3 text-white outline-none"
+                      className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none"
                     >
                       <option value="mi">Miles / MPG</option>
                       <option value="km">Kilometers / L/100 km</option>
@@ -888,7 +913,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-zinc-300">
+                    <label className="mb-2 block text-sm font-medium text-slate-300">
                       {t.currencyUnit}
                     </label>
                     <select
@@ -896,7 +921,7 @@ export default function Home() {
                       onChange={(e) =>
                         setCurrency(e.target.value as CurrencyCode)
                       }
-                      className="w-full rounded-2xl border border-white/10 bg-zinc-900 px-4 py-3 text-white outline-none"
+                      className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none"
                     >
                       <option value="USD">USD</option>
                       <option value="EUR">EUR</option>
@@ -935,7 +960,7 @@ export default function Home() {
 
                     <button
                       onClick={handleCompare}
-                      className="inline-flex items-center justify-center rounded-2xl border border-red-400/20 bg-red-400/10 px-6 py-3 text-sm font-semibold text-red-300 transition hover:bg-red-400/15"
+                      className="inline-flex items-center justify-center rounded-2xl border border-sky-400/20 bg-sky-400/10 px-6 py-3 text-sm font-semibold text-sky-300 transition hover:bg-sky-400/15"
                     >
                       {t.compareButton}
                     </button>
@@ -959,7 +984,7 @@ export default function Home() {
                   transition={{ duration: 0.35 }}
                   className="rounded-[34px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
                 >
-                  <p className="text-sm leading-6 text-zinc-300">
+                  <p className="text-sm leading-6 text-slate-300">
                     {t.noResultText}
                   </p>
                 </motion.div>
@@ -973,7 +998,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35 }}
-                  className="rounded-[30px] border border-red-400/20 bg-red-400/10 p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
+                  className="rounded-[30px] border border-sky-400/20 bg-sky-400/10 p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8"
                 >
                   <h3 className="flex items-center gap-2 text-2xl font-semibold">
                     <ArrowLeftRight className="h-5 w-5" />
@@ -1002,7 +1027,7 @@ export default function Home() {
                       )}
                     </div>
                   ) : (
-                    <p className="mt-4 text-zinc-200">{t.sameCost}</p>
+                    <p className="mt-4 text-slate-200">{t.sameCost}</p>
                   )}
                 </motion.div>
               )}
