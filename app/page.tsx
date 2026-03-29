@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { track } from "@vercel/analytics";
+import LeadForm from "./components/LeadForm";
 
 type Language = "en" | "ru";
 type DistanceUnit = "mi" | "km";
@@ -47,6 +48,8 @@ export default function Home() {
 
   const [email, setEmail] = useState("");
   const [emailSaved, setEmailSaved] = useState(false);
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const t = {
     en: {
@@ -107,11 +110,14 @@ export default function Home() {
       drivingGroup: "Driving",
       costGroup: "Monthly costs",
       emailTitle: "Save your result + get smarter car cost tips",
-      emailText: "Leave your email and we’ll keep your result path for future updates.",
+      emailText:
+        "Leave your email and we’ll keep your result path for future updates.",
       emailPlaceholder: "Enter your email",
       emailButton: "Save",
       emailSaved: "Saved. You’re on the list.",
-      nudge: "You could save money by optimizing insurance, financing, or fuel efficiency.",
+      emailError: "Something went wrong. Please try again.",
+      nudge:
+        "You could save money by optimizing insurance, financing, or fuel efficiency.",
     },
     ru: {
       brand: "CarCost",
@@ -171,11 +177,14 @@ export default function Home() {
       drivingGroup: "Движение",
       costGroup: "Ежемесячные расходы",
       emailTitle: "Сохрани расчёт + получай полезные советы",
-      emailText: "Оставь email, и мы сохраним твой результат для будущих обновлений.",
+      emailText:
+        "Оставь email, и мы сохраним твой результат для будущих обновлений.",
       emailPlaceholder: "Введите email",
       emailButton: "Сохранить",
       emailSaved: "Сохранено. Ты в списке.",
-      nudge: "Ты можешь снизить расходы за счёт страховки, финансирования или расхода топлива.",
+      emailError: "Что-то пошло не так. Попробуй ещё раз.",
+      nudge:
+        "Ты можешь снизить расходы за счёт страховки, финансирования или расхода топлива.",
     },
   }[language];
 
@@ -290,6 +299,8 @@ export default function Home() {
     setShowCompare(false);
     setEmail("");
     setEmailSaved(false);
+    setEmailLoading(false);
+    setEmailError("");
   }
 
   function handleUseSampleData() {
@@ -335,13 +346,39 @@ export default function Home() {
     setResultB(null);
   }
 
-  function handleEmailSubmit() {
+  async function handleEmailSubmit() {
     const clean = email.trim();
-    if (!clean) return;
 
-    localStorage.setItem("carcost_email", clean);
-    track("email_submitted");
-    setEmailSaved(true);
+    if (!clean) {
+      setEmailError("");
+      return;
+    }
+
+    setEmailLoading(true);
+    setEmailError("");
+
+    try {
+      const res = await fetch("/api/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: clean }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit email");
+      }
+
+      track("email_submitted");
+      setEmailSaved(true);
+      setEmail("");
+    } catch (error) {
+      console.error("Email submit error:", error);
+      setEmailError(t.emailError);
+    } finally {
+      setEmailLoading(false);
+    }
   }
 
   function renderField(
@@ -505,6 +542,23 @@ export default function Home() {
       </div>
     );
   }
+<div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+  <p className="text-sm text-neutral-300">
+    💡 You may be overpaying for insurance or financing.
+  </p>
+
+  <p className="mt-2 text-xs text-neutral-500">
+    Compare real offers and see if you can lower your monthly cost.
+  </p>
+
+  <a
+    href="https://www.google.com/search?q=car+insurance+comparison"
+    target="_blank"
+    className="mt-3 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
+  >
+    Compare options →
+  </a>
+</div>
 
   const canCompare = resultA && resultB;
 
@@ -695,9 +749,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="mt-6">
-                {renderScenarioCard(t.scenarioA, "A", scenarioA)}
-              </div>
+              <div className="mt-6">{renderScenarioCard(t.scenarioA, "A", scenarioA)}</div>
 
               {showCompare && (
                 <div className="mt-4">
@@ -777,37 +829,19 @@ export default function Home() {
               )}
 
               {(resultA || resultB) && (
-                <div className="rounded-[30px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8">
-                  {!emailSaved ? (
-                    <>
-                      <h3 className="text-xl font-semibold">{t.emailTitle}</h3>
-                      <p className="mt-2 text-sm text-neutral-400">
-                        {t.emailText}
-                      </p>
-
-                      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                        <input
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder={t.emailPlaceholder}
-                          className="flex-1 rounded-2xl border border-white/10 bg-neutral-900/80 px-4 py-3 text-white outline-none transition focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20"
-                        />
-
-                        <button
-                          onClick={handleEmailSubmit}
-                          className="rounded-2xl bg-white px-5 py-3 font-semibold text-black transition hover:opacity-90"
-                        >
-                          {t.emailButton}
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <p className="font-semibold text-amber-300">
-                      {t.emailSaved}
-                    </p>
-                  )}
-                </div>
+                <LeadForm
+                  title={t.emailTitle}
+                  text={t.emailText}
+                  email={email}
+                  setEmail={setEmail}
+                  buttonText={t.emailButton}
+                  placeholder={t.emailPlaceholder}
+                  successText={t.emailSaved}
+                  submitted={emailSaved}
+                  onSubmit={handleEmailSubmit}
+                  loading={emailLoading}
+                  errorText={emailError}
+                />
               )}
             </div>
           </div>
