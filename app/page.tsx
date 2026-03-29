@@ -118,6 +118,10 @@ export default function Home() {
       emailError: "Something went wrong. Please try again.",
       nudge:
         "You could save money by optimizing insurance, financing, or fuel efficiency.",
+      dealsTitle: "You may be overpaying for insurance or financing",
+      dealsText:
+        "Compare real offers and see if you can lower your monthly cost.",
+      dealsButton: "Compare options →",
     },
     ru: {
       brand: "CarCost",
@@ -185,6 +189,10 @@ export default function Home() {
       emailError: "Что-то пошло не так. Попробуй ещё раз.",
       nudge:
         "Ты можешь снизить расходы за счёт страховки, финансирования или расхода топлива.",
+      dealsTitle: "Возможно, ты переплачиваешь за страховку или финансирование",
+      dealsText:
+        "Сравни предложения и проверь, можно ли снизить ежемесячные расходы.",
+      dealsButton: "Сравнить предложения →",
     },
   }[language];
 
@@ -539,26 +547,26 @@ export default function Home() {
         <div className="mt-4 rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-sm font-medium text-amber-300">
           {t.nudge}
         </div>
+
+        <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <p className="text-sm font-medium text-neutral-200">
+            💡 {t.dealsTitle}
+          </p>
+
+          <p className="mt-2 text-sm text-neutral-400">{t.dealsText}</p>
+
+          <a
+            href="https://www.google.com/search?q=car+insurance+comparison"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
+          >
+            {t.dealsButton}
+          </a>
+        </div>
       </div>
     );
   }
-<div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-  <p className="text-sm text-neutral-300">
-    💡 You may be overpaying for insurance or financing.
-  </p>
-
-  <p className="mt-2 text-xs text-neutral-500">
-    Compare real offers and see if you can lower your monthly cost.
-  </p>
-
-  <a
-    href="https://www.google.com/search?q=car+insurance+comparison"
-    target="_blank"
-    className="mt-3 inline-block rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
-  >
-    Compare options →
-  </a>
-</div>
 
   const canCompare = resultA && resultB;
 
@@ -749,7 +757,9 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="mt-6">{renderScenarioCard(t.scenarioA, "A", scenarioA)}</div>
+              <div className="mt-6">
+                {renderScenarioCard(t.scenarioA, "A", scenarioA)}
+              </div>
 
               {showCompare && (
                 <div className="mt-4">
