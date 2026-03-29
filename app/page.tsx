@@ -45,6 +45,9 @@ export default function Home() {
 
   const [showCompare, setShowCompare] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [emailSaved, setEmailSaved] = useState(false);
+
   const t = {
     en: {
       brand: "CarCost",
@@ -103,6 +106,12 @@ export default function Home() {
       literShort: "/ liter",
       drivingGroup: "Driving",
       costGroup: "Monthly costs",
+      emailTitle: "Save your result + get smarter car cost tips",
+      emailText: "Leave your email and we’ll keep your result path for future updates.",
+      emailPlaceholder: "Enter your email",
+      emailButton: "Save",
+      emailSaved: "Saved. You’re on the list.",
+      nudge: "You could save money by optimizing insurance, financing, or fuel efficiency.",
     },
     ru: {
       brand: "CarCost",
@@ -161,6 +170,12 @@ export default function Home() {
       literShort: "/ литр",
       drivingGroup: "Движение",
       costGroup: "Ежемесячные расходы",
+      emailTitle: "Сохрани расчёт + получай полезные советы",
+      emailText: "Оставь email, и мы сохраним твой результат для будущих обновлений.",
+      emailPlaceholder: "Введите email",
+      emailButton: "Сохранить",
+      emailSaved: "Сохранено. Ты в списке.",
+      nudge: "Ты можешь снизить расходы за счёт страховки, финансирования или расхода топлива.",
     },
   }[language];
 
@@ -273,6 +288,8 @@ export default function Home() {
     setResultA(null);
     setResultB(null);
     setShowCompare(false);
+    setEmail("");
+    setEmailSaved(false);
   }
 
   function handleUseSampleData() {
@@ -316,6 +333,15 @@ export default function Home() {
 
     setResultA(null);
     setResultB(null);
+  }
+
+  function handleEmailSubmit() {
+    const clean = email.trim();
+    if (!clean) return;
+
+    localStorage.setItem("carcost_email", clean);
+    track("email_submitted");
+    setEmailSaved(true);
   }
 
   function renderField(
@@ -471,6 +497,10 @@ export default function Home() {
             formatCurrency(result.costPerDistanceUnit),
             true
           )}
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-sm font-medium text-amber-300">
+          {t.nudge}
         </div>
       </div>
     );
@@ -742,6 +772,40 @@ export default function Home() {
                     </div>
                   ) : (
                     <p className="mt-4 text-neutral-200">{t.sameCost}</p>
+                  )}
+                </div>
+              )}
+
+              {(resultA || resultB) && (
+                <div className="rounded-[30px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_16px_60px_rgba(0,0,0,0.25)] sm:p-8">
+                  {!emailSaved ? (
+                    <>
+                      <h3 className="text-xl font-semibold">{t.emailTitle}</h3>
+                      <p className="mt-2 text-sm text-neutral-400">
+                        {t.emailText}
+                      </p>
+
+                      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder={t.emailPlaceholder}
+                          className="flex-1 rounded-2xl border border-white/10 bg-neutral-900/80 px-4 py-3 text-white outline-none transition focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20"
+                        />
+
+                        <button
+                          onClick={handleEmailSubmit}
+                          className="rounded-2xl bg-white px-5 py-3 font-semibold text-black transition hover:opacity-90"
+                        >
+                          {t.emailButton}
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="font-semibold text-amber-300">
+                      {t.emailSaved}
+                    </p>
                   )}
                 </div>
               )}
