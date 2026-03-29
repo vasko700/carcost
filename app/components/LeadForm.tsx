@@ -40,39 +40,43 @@ export default function LeadForm({
         {text}
       </p>
 
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-        <input
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              handleSubmit();
-            }
-          }}
-          placeholder={placeholder}
-          className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-neutral-900/80 px-4 py-3 text-white outline-none placeholder:text-neutral-500"
-        />
+      {!submitted ? (
+        <>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <input
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSubmit();
+                }
+              }}
+              placeholder={placeholder}
+              className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-neutral-900/80 px-4 py-3 text-white outline-none transition focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 placeholder:text-neutral-500"
+            />
 
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={loading}
-          className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {loading ? "Saving..." : buttonText}
-        </button>
-      </div>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={loading}
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading ? "Saving..." : buttonText}
+            </button>
+          </div>
 
-      {submitted && (
-        <p className="mt-4 text-sm text-green-400">{successText}</p>
-      )}
-
-      {!submitted && errorText && (
-        <p className="mt-4 text-sm text-red-400">{errorText}</p>
+          {errorText && (
+            <p className="mt-4 text-sm text-red-400">{errorText}</p>
+          )}
+        </>
+      ) : (
+        <p className="mt-4 text-sm font-medium text-green-400">
+          {successText}
+        </p>
       )}
     </div>
   );
