@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 type Language = "en" | "ru";
 type DistanceUnit = "mi" | "km";
@@ -251,14 +252,17 @@ export default function Home() {
   }
 
   function handleCalculateA() {
+    track("calculate_A");
     setResultA(calc(scenarioA));
   }
 
   function handleCalculateB() {
+    track("calculate_B");
     setResultB(calc(scenarioB));
   }
 
   function handleCompare() {
+    track("compare");
     setResultA(calc(scenarioA));
     setResultB(calc(scenarioB));
   }
@@ -272,6 +276,8 @@ export default function Home() {
   }
 
   function handleUseSampleData() {
+    track("sample_data");
+
     if (distanceUnit === "mi") {
       setScenarioA({
         monthlyDistance: "900",
@@ -332,7 +338,11 @@ export default function Home() {
     );
   }
 
-  function renderScenarioCard(title: string, which: "A" | "B", data: ScenarioInput) {
+  function renderScenarioCard(
+    title: string,
+    which: "A" | "B",
+    data: ScenarioInput
+  ) {
     return (
       <div className="rounded-[26px] border border-white/10 bg-neutral-900/70 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.25)]">
         <div className="flex items-center justify-between">
@@ -364,14 +374,20 @@ export default function Home() {
             {t.costGroup}
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
-            {renderField(`${t.insurancePerMonth} (${currency})`, data.insurancePerMonth, (v) =>
-              updateScenario(which, "insurancePerMonth", v)
+            {renderField(
+              `${t.insurancePerMonth} (${currency})`,
+              data.insurancePerMonth,
+              (v) => updateScenario(which, "insurancePerMonth", v)
             )}
-            {renderField(`${t.maintenancePerMonth} (${currency})`, data.maintenancePerMonth, (v) =>
-              updateScenario(which, "maintenancePerMonth", v)
+            {renderField(
+              `${t.maintenancePerMonth} (${currency})`,
+              data.maintenancePerMonth,
+              (v) => updateScenario(which, "maintenancePerMonth", v)
             )}
-            {renderField(`${t.paymentPerMonth} (${currency})`, data.paymentPerMonth, (v) =>
-              updateScenario(which, "paymentPerMonth", v)
+            {renderField(
+              `${t.paymentPerMonth} (${currency})`,
+              data.paymentPerMonth,
+              (v) => updateScenario(which, "paymentPerMonth", v)
             )}
           </div>
         </div>
@@ -389,14 +405,22 @@ export default function Home() {
         }`}
       >
         <p className="text-sm text-neutral-400">{label}</p>
-        <p className={`mt-2 text-xl font-semibold ${accent ? "text-amber-300" : ""}`}>
+        <p
+          className={`mt-2 text-xl font-semibold ${
+            accent ? "text-amber-300" : ""
+          }`}
+        >
           {value}
         </p>
       </div>
     );
   }
 
-  function renderResultCard(title: string, result: Result | null, data: ScenarioInput) {
+  function renderResultCard(
+    title: string,
+    result: Result | null,
+    data: ScenarioInput
+  ) {
     if (!result) return null;
 
     return (
